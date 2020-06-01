@@ -28,7 +28,8 @@ public class ContainerObjets {
 		String str = sc.nextLine();
 		
 		sc.close();
-		if(str == "1") {
+		System.out.println(str);
+		if(str.equals("1")) {
 			return true;
 		}
 		else {
@@ -52,10 +53,9 @@ public class ContainerObjets {
 		
 		sc.close();
 		System.out.println(str);
-		if(str == "1") {
+		if(str.equals("1")) {
 			return true;
 		}	
-		
 		else {
 			return false;
 		}
