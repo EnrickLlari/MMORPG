@@ -1,6 +1,11 @@
 package fr.mugiwara.mmorpg;
 
 import java.util.Scanner;
+/**
+ * Class Actions
+ * @author Enrick
+ * @version 1.0
+ */
 
 public class Actions {
 	public static void useObjet() {
