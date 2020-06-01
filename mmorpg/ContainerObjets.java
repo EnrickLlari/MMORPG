@@ -12,7 +12,11 @@ public class ContainerObjets {
 	
 
 	
-
+	/*
+	 * Méthode d'ajout d'un objet
+	 * par scanner
+	 * @return Boolean
+	 */
 	public static boolean addObjet() {
 		
 		new Objets();
@@ -33,6 +37,10 @@ public class ContainerObjets {
 		
 	
 	}
+	/*
+	 * Méthode de pour retirer un objet
+	 * par scanner
+	 */
 	public static boolean removeObjet() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Jeter l'objet ? ");
