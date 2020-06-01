@@ -25,7 +25,7 @@ public class ContainerObjets {
 	}
 	
 	
-	/*
+	/**
 	 * Method d'ajout d'objet
 	 * @param Objets
 	 */
@@ -36,7 +36,7 @@ public class ContainerObjets {
 	}
 	
 	
-	/*
+	/**
 	 * Method de supression d'objet
 	 * @param Objets
 	 */
