@@ -1,4 +1,9 @@
 package fr.mugiwara.mmorpg;
+/**
+ * Class Objets
+ * @author Enrick
+ * @version 1.0
+ */
 
 
 public class Objets {
