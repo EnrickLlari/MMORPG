@@ -1,6 +1,12 @@
 package fr.mugiwara.mmorpg;
 
 import java.util.Scanner;
+/**
+ * Class ContainerObjets
+ * @author Enrick
+ * @version 1.0
+ *
+ */
 
 public class ContainerObjets {
 	
