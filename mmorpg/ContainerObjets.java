@@ -40,6 +40,7 @@ public class ContainerObjets {
 	/*
 	 * Méthode de pour retirer un objet
 	 * par scanner
+	 * @return Boolean
 	 */
 	public static boolean removeObjet() {
 		Scanner sc = new Scanner(System.in);
