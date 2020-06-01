@@ -1,6 +1,7 @@
 package fr.mugiwara.mmorpg;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+
 /**
  * Class ContainerObjets
  * @author Enrick
@@ -10,56 +11,39 @@ import java.util.Scanner;
 
 public class ContainerObjets {
 	
-
+	// VARIABLES
+	
+	private ArrayList<Objets> objets;
 	
 	/*
-	 * Méthode d'ajout d'un objet
-	 * par scanner
-	 * @return Boolean
+	 * Constructeur de la liste d'Objets
 	 */
-	public static boolean addObjet() {
-		
-		new Objets();
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Ramasser l'objet ? ");
-		System.out.println("1- Oui ");
-		System.out.println("2- Non ");
-		
-		String str = sc.nextLine();
-		
-		sc.close();
-		System.out.println(str);
-		if(str.equals("1")) {
-			return true;
-		}
-		else {
-			return false;
-		}
-		
 	
+	public ContainerObjets() {
+		objets = new ArrayList<Objets>();
+		
 	}
+	
+	
 	/*
-	 * Méthode de pour retirer un objet
-	 * par scanner
-	 * @return Boolean
+	 * Method d'ajout d'objet
+	 * @param Objets
 	 */
-	public static boolean removeObjet() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Jeter l'objet ? ");
-		System.out.println("1- Oui ");
-		System.out.println("2- Non ");
-		
-		String str = sc.nextLine();
-		
-		sc.close();
-		System.out.println(str);
-		if(str.equals("1")) {
-			return true;
-		}	
-		else {
-			return false;
-		}
-		
+
+	public void addObjet(Objets o) {
+
+		objets.add(o);
+	}
+	
+	
+	/*
+	 * Method de supression d'objet
+	 * @param Objets
+	 */
+	public void removeObjet(Objets o) {
+
+		objets.remove(o);
+
 	}
 
 }
