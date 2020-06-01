@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class Mmorpg {
 	
-	private Map map;
+	public static Map map;
 	
 	/*
 	 * Constructeur du joueur
@@ -21,14 +21,13 @@ public class Mmorpg {
 		System.out.println("Démarrage du jeu.");
 		
 		if(menu()) {
-			this.map = new Map();
+			Mmorpg.map = new Map();
 		} else {
 			// Charger une partie
 		}
 		
-		// Création joueur
-		Joueur p = new Joueur();
-		map.addEntite(p);
+		Joueur player = new Joueur(192);
+		map.addEntite(player);
 		
 		
 		
@@ -72,7 +71,7 @@ public class Mmorpg {
 	 */
 	public void afficher() {
 		
-		for(Entite ent : this.map.getMap()) {
+		for(Entite ent : Mmorpg.map.getMap()) {
 			
 			System.out.println(ent.getDisplay() + " sur " +ent.getPosition());	
 			
@@ -80,8 +79,17 @@ public class Mmorpg {
 			
 		}
 		
+	}
+	
+	/*
+	 * Ajouter une entité à la map
+	 */
+	public void addtoMap(Entite e) {
+		
+		Mmorpg.map.addEntite(e);
 		
 	}
+	
 	
 	
 	
@@ -92,7 +100,10 @@ public class Mmorpg {
 		
 		Mmorpg jeu = new Mmorpg();
 		
-		jeu.afficher();
+		Mur.initialise_murs(Mmorpg.map);
+		
+		Mmorpg.map.buildMap();
+		
 		
 	}
 	

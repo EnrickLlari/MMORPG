@@ -7,7 +7,7 @@ package fr.mugiwara.mmorpg;
  */
 public class Entite {
 	
-	protected int postition;
+	protected int position;
 	protected String display;
 	
 	
@@ -17,7 +17,7 @@ public class Entite {
 	 */
 	public int getPosition() {
 		
-		return this.postition;
+		return this.position;
 	}
 	
 	
