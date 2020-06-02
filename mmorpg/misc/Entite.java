@@ -1,5 +1,7 @@
 package fr.mugiwara.mmorpg.misc;
 
+import fr.mugiwara.mmorpg.game.Game;
+
 /**
  * Class Entite
  * @author Sanjeevan
@@ -28,6 +30,36 @@ public class Entite {
 	public String getDisplay() {
 		
 		return this.display;
+		
+	}
+	
+	/**
+	 * Faire déplacer l'entité
+	 * @param dir String
+	 * @return Boolean
+	 */
+	public boolean deplacer(String dir) {
+		int newPos = this.position;
+		
+		if(dir.equalsIgnoreCase("h")) {
+			newPos = this.position - 27;
+			if(!Game.map.ifPosFree(newPos)) return false;
+		} else if(dir.equalsIgnoreCase("b")) {
+			newPos = this.position + 27;
+			if(!Game.map.ifPosFree(newPos)) return false;
+
+		} else if(dir.equalsIgnoreCase("d")) {
+			newPos = this.position +1;
+			if(!Game.map.ifPosFree(newPos)) return false;
+
+		} else if(dir.equalsIgnoreCase("g")) {
+			newPos = this.position - 1;
+			if(!Game.map.ifPosFree(newPos)) return false;
+		} else {
+			return false;
+		}
+		this.position = newPos;
+		return true;
 		
 	}
 	

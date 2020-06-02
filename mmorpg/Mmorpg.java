@@ -6,7 +6,7 @@ import java.util.Scanner;
 import fr.mugiwara.mmorpg.game.Game;
 
 /**
- * Classe Mmorpg
+ * Class Mmorpg
  * @author Sanjeevan
  * @version 1.0
  *

@@ -70,9 +70,9 @@ public class Joueur extends Entite{
 	public void statsAfficher() {
 		
 		System.out.println("Vos caractéristiques ");
-		System.out.println(" - Initiative : " + force.getDegre());
-		System.out.println(" - Attaque : " + adresse.getDegre());
-		System.out.println(" - Esquive : " + resistance.getDegre());
+		System.out.println(" - Force : " + force.getDegre());
+		System.out.println(" - Adresse : " + adresse.getDegre());
+		System.out.println(" - Résistance : " + resistance.getDegre());
 		
 	}
 	
@@ -212,35 +212,5 @@ public class Joueur extends Entite{
 		
 	}
 	
-	
-	/**
-	 * Faire déplacer le joueur
-	 * @param dir String
-	 * @return Boolean
-	 */
-	public boolean deplacer(String dir) {
-		int newPos = this.position;
-		
-		if(dir.equalsIgnoreCase("h")) {
-			newPos = this.position - 27;
-			if(!Game.map.ifPosFree(newPos)) return false;
-		} else if(dir.equalsIgnoreCase("b")) {
-			newPos = this.position + 27;
-			if(!Game.map.ifPosFree(newPos)) return false;
-
-		} else if(dir.equalsIgnoreCase("d")) {
-			newPos = this.position +1;
-			if(!Game.map.ifPosFree(newPos)) return false;
-
-		} else if(dir.equalsIgnoreCase("g")) {
-			newPos = this.position - 1;
-			if(!Game.map.ifPosFree(newPos)) return false;
-		} else {
-			return false;
-		}
-		this.position = newPos;
-		return true;
-		
-	}
 
 }

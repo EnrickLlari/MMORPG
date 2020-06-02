@@ -31,6 +31,8 @@ public class Game {
 	
 	public boolean startGame() {
 		
+		setState(GameState.IN_PROGRESS);
+		
 		boolean check = false;
 		
 		while(!check) {
@@ -50,7 +52,7 @@ public class Game {
 					System.out.println(" ");
 					
 					try {
-						TimeUnit.SECONDS.sleep(10);
+						TimeUnit.SECONDS.sleep(1);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
