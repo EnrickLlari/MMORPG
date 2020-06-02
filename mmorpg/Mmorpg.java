@@ -29,8 +29,19 @@ public class Mmorpg {
 		Joueur player = new Joueur(192);
 		map.addEntite(player);
 		
+		Mur.initialise_murs(map);
 		
+		map.buildMap();
 		
+		Actions.move(player);
+		
+		map.buildMap();
+		
+		Actions.move(player);
+		
+		map.buildMap();
+		
+		Actions.move(player);
 	}
 	
 	/**
@@ -99,6 +110,7 @@ public class Mmorpg {
 	public static void main(String[] args) {
 		
 		Mmorpg jeu = new Mmorpg();
+		
 		
 		Mur.initialise_murs(Mmorpg.map);
 		

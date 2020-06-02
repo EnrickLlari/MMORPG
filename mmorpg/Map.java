@@ -43,13 +43,14 @@ public class Map {
 		
 		for(Entite e : game_map) {
 			
-			if(e.getPosition() == pos) {
-				return true;
+			if(pos == e.position) {
+				
+				return false;
 			}
 			
 		}
 		
-		return false;
+		return true;
 	}
 	
 	/**

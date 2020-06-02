@@ -128,6 +128,7 @@ public class Joueur extends Entite{
 	 */
 	public boolean deplacer(String dir) {
 		int newPos = this.position;
+		
 		if(dir.equalsIgnoreCase("h")) {
 			newPos = this.position - 27;
 			if(!Mmorpg.map.ifPosFree(newPos)) return false;
@@ -142,7 +143,6 @@ public class Joueur extends Entite{
 		} else if(dir.equalsIgnoreCase("g")) {
 			newPos = this.position - 1;
 			if(!Mmorpg.map.ifPosFree(newPos)) return false;
-
 		} else {
 			return false;
 		}
