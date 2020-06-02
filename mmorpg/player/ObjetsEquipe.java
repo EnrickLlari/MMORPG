@@ -1,7 +1,7 @@
 package fr.mugiwara.mmorpg.player;
 
-import fr.mugiwara.mmorpg.game.Objet;
 import fr.mugiwara.mmorpg.misc.ContainerObjets;
+import fr.mugiwara.mmorpg.misc.Objet;
 
 /**
  * Class ObjetEquipe

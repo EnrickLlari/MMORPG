@@ -2,8 +2,6 @@ package fr.mugiwara.mmorpg.misc;
 
 import java.util.ArrayList;
 
-import fr.mugiwara.mmorpg.game.Objet;
-
 /**
  * Interface ContainerObjets
  * @author Sanjeevan

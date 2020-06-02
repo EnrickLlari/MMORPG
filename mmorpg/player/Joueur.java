@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import fr.mugiwara.mmorpg.Mmorpg;
+import fr.mugiwara.mmorpg.game.Game;
 import fr.mugiwara.mmorpg.misc.Degre;
 import fr.mugiwara.mmorpg.misc.Entite;
 
@@ -88,8 +88,9 @@ public class Joueur extends Entite{
 	/**
 	 * Afficher le menu du joueur
 	 */
-	public void getMenu() {
-		
+	public boolean getMenu() {
+		Game.StateAfficher();
+		Game.map.buildMap();
 		equiped.afficher();
 		sac.afficher();
 		statsAfficher();
@@ -102,32 +103,40 @@ public class Joueur extends Entite{
 		System.out.println("2 - Attaquer [3PA]      | 4 - Ramasser/Jeter un objet [1PA]");
 		System.out.println("5 - Ne rien faire et terminer votre tour");
 		System.out.println(" ");
-		getAction();
+		Boolean act = getAction();
 
-		
+		return act;
 	}
 	
 	/**
 	 * Proposer les actions à effectuer
 	 */
-	public void getAction() {
+	public boolean getAction() {
 		
 		List<String> resp_pos = Arrays.asList("1", "2", "3", "4", "5");
 		
 
 		boolean check = false;
-		
+		String resp = "";
 		while(!check) {
 			System.out.println("Que voulez vous faire ?");
 			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(System.in);
-			String resp = sc.nextLine();
+			resp = sc.nextLine();
 			if(resp_pos.contains(resp)) {
 				check = true;
 			}
 		}
 		
 		// DO ACTION
+		if(resp.equals("5")) {
+			return true;
+		} else if(resp.equals("1")) {
+			actions.move();
+		}
+		
+		return false;
+		
 	}
 	
 	/**
@@ -214,18 +223,18 @@ public class Joueur extends Entite{
 		
 		if(dir.equalsIgnoreCase("h")) {
 			newPos = this.position - 27;
-			if(!Mmorpg.map.ifPosFree(newPos)) return false;
+			if(!Game.map.ifPosFree(newPos)) return false;
 		} else if(dir.equalsIgnoreCase("b")) {
 			newPos = this.position + 27;
-			if(!Mmorpg.map.ifPosFree(newPos)) return false;
+			if(!Game.map.ifPosFree(newPos)) return false;
 
 		} else if(dir.equalsIgnoreCase("d")) {
 			newPos = this.position +1;
-			if(!Mmorpg.map.ifPosFree(newPos)) return false;
+			if(!Game.map.ifPosFree(newPos)) return false;
 
 		} else if(dir.equalsIgnoreCase("g")) {
 			newPos = this.position - 1;
-			if(!Mmorpg.map.ifPosFree(newPos)) return false;
+			if(!Game.map.ifPosFree(newPos)) return false;
 		} else {
 			return false;
 		}

@@ -3,10 +3,7 @@ package fr.mugiwara.mmorpg;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import fr.mugiwara.mmorpg.game.Map;
-import fr.mugiwara.mmorpg.game.Mur;
-import fr.mugiwara.mmorpg.misc.Entite;
-import fr.mugiwara.mmorpg.player.Joueur;
+import fr.mugiwara.mmorpg.game.Game;
 
 /**
  * Classe Mmorpg
@@ -16,8 +13,7 @@ import fr.mugiwara.mmorpg.player.Joueur;
  */
 public class Mmorpg {
 	
-	public static Map map;
-	
+	public static Game game;
 	/*
 	 * Constructeur du joueur
 	 */
@@ -26,17 +22,11 @@ public class Mmorpg {
 		System.out.println("Démarrage du jeu.");
 		
 		if(menu()) {
-			Mmorpg.map = new Map();
+			Mmorpg.game = new Game();
 		} else {
 			// Charger une partie
 		}
-		
-		Joueur player = new Joueur(192);
-		map.addEntite(player);
-		
-		map.buildMap();
-		
-		player.getMenu();
+
 
 	}
 	
@@ -71,31 +61,7 @@ public class Mmorpg {
 		
 		
 	}
-	
-	
-	/* 
-	 * Affichier la map ( Entité avec sa position )
-	 */
-	public void afficher() {
-		
-		for(Entite ent : Mmorpg.map.getMap()) {
-			
-			System.out.println(ent.getDisplay() + " sur " +ent.getPosition());	
-			
-			System.out.println(ent.toString());
-			
-		}
-		
-	}
-	
-	/*
-	 * Ajouter une entité à la map
-	 */
-	public void addtoMap(Entite e) {
-		
-		Mmorpg.map.addEntite(e);
-		
-	}
+
 	
 	
 	
@@ -106,9 +72,6 @@ public class Mmorpg {
 	public static void main(String[] args) {
 		
 		Mmorpg jeu = new Mmorpg();
-		
-		
-		Mur.initialise_murs(Mmorpg.map);
 		
 		
 		
