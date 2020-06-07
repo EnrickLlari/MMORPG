@@ -26,7 +26,7 @@ public class Sac extends ContainerObjets  {
 	public boolean addObjet(Objet o) {
 		if(spaceFree()) {
 			
-			content.add(o);
+			content.put(o, used_size);
 			used_size++;
 			return true;
 		}
@@ -46,13 +46,14 @@ public class Sac extends ContainerObjets  {
 		return true;
 		
 	}
+	
 
 	@Override
 	public void afficher() {
 		int i = 0;
 		System.out.println("Votre sac (" + used_size + ") : ");
-		for (Objet objet : content) {
-			System.out.println(" - " + objet.getNom());
+		for (Objet objet : content.keySet()) {
+			System.out.println(" - " + objet.getNom() + " [" + content.get(objet) + "]");
 			i++;
 		}
 		

@@ -1,6 +1,6 @@
 package fr.mugiwara.mmorpg.misc;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Interface ContainerObjets
@@ -11,7 +11,7 @@ public abstract class ContainerObjets {
 	
 	// VARIABLES
 	
-	protected ArrayList<Objet> content;
+	protected HashMap<Objet, Integer> content;
 	protected int used_size = 0;
 	protected int max_size; 
 	
@@ -19,7 +19,7 @@ public abstract class ContainerObjets {
 	 * Constructeur du sac
 	 */
 	public ContainerObjets() {
-		content = new ArrayList<Objet>();
+		content = new HashMap<Objet, Integer>();
 	}
 	
 	/**
@@ -30,6 +30,14 @@ public abstract class ContainerObjets {
 		if(used_size < max_size) return true;
 		
 		return false;
+	}
+	
+	/**
+	 * Retourne le contenu du container
+	 * @return HashMap
+	 */
+	public HashMap<Objet, Integer> getContent() {
+		return this.content;
 	}
 	
 	/**

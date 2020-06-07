@@ -15,7 +15,7 @@ public class Mmorpg {
 	
 	public static Game game;
 	/*
-	 * Constructeur du joueur
+	 * Constructeur de Mmorpg
 	 */
 	public Mmorpg() {
 		
@@ -23,11 +23,22 @@ public class Mmorpg {
 		
 		if(menu()) {
 			Mmorpg.game = new Game();
+			
 		} else {
 			// Charger une partie
 		}
 
 
+	}
+	
+	/**
+	 * Lancer la game
+	 */
+	public void Launch() {
+		if(Mmorpg.game != null) {
+			Mmorpg.game.launchGame();	
+		}
+		
 	}
 	
 	/**
@@ -40,6 +51,7 @@ public class Mmorpg {
 		msg.add("Que voulez vous faire :");
 		msg.add("   - 1 : Créer une nouvelle partie");
 		msg.add("   - 2 : Rejoindre une partie");
+		msg.add("   - 3 : Quitter");
 		msg.add("  ");
 		
 		
@@ -53,10 +65,10 @@ public class Mmorpg {
 		String resp = sc.nextLine();
 
 		
-		if(resp == "2") {
-			return false;
-		} else {
+		if(resp.equalsIgnoreCase("1")) {
 			return true;
+		} else {
+			return false;
 		}
 		
 		
@@ -71,9 +83,8 @@ public class Mmorpg {
 	 */
 	public static void main(String[] args) {
 		
-		Mmorpg jeu = new Mmorpg();
-		
-		
+		Mmorpg jeu = new Mmorpg();		
+		jeu.Launch();
 		
 	}
 	

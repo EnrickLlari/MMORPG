@@ -11,12 +11,14 @@ import fr.mugiwara.mmorpg.misc.Objet;
 
 public class ObjetsEquipe extends ContainerObjets{
 	
+	private Joueur j;
 
 	/**
 	 * Constructeur des objets equipes
 	 */
-	public ObjetsEquipe() {
+	public ObjetsEquipe(Joueur j) {
 		max_size = 2;
+		this.j = j;
 	}
 	
 	
@@ -27,10 +29,36 @@ public class ObjetsEquipe extends ContainerObjets{
 	@Override
 	public boolean addObjet(Objet o) {
 		
+		if(!j.actions.canAction(o.getCost())) return false;
+		
 		if(spaceFree()) {
 			
-			content.add(o);
+			content.put(o, used_size);
 			used_size++;
+			
+			if(o.getCapacite().equalsIgnoreCase("initiative")) {
+				
+				j.capacites.addInitiative(o.getCapacite_value());
+				
+			} else if(o.getCapacite().equalsIgnoreCase("attaque")) {
+				
+				j.capacites.addAttaque(o.getCapacite_value());
+				
+			} else if(o.getCapacite().equalsIgnoreCase("esquive")) {
+				
+				j.capacites.addEsquive(o.getCapacite_value());
+				
+			} else if(o.getCapacite().equalsIgnoreCase("defense")) {
+				
+				j.capacites.addDefense(o.getCapacite_value());
+				
+			}  else if(o.getCapacite().equalsIgnoreCase("degat")) {
+				
+				j.capacites.addDegat(o.getCapacite_value());
+				
+			}
+			
+			j.actions.addPoints(-o.getCost());
 			
 			return true;
 		}
@@ -44,9 +72,33 @@ public class ObjetsEquipe extends ContainerObjets{
 	@Override
 	public boolean removeObjet(Objet o) {
 
-		if(content.contains(o)) {
+		
+		if(content.containsKey(o)) {
 			content.remove(o);
 			used_size--;
+			
+			if(o.getCapacite().equalsIgnoreCase("initiative")) {
+				
+				j.capacites.addInitiative(-o.getCapacite_value());
+				
+			} else if(o.getCapacite().equalsIgnoreCase("attaque")) {
+				
+				j.capacites.addAttaque(-o.getCapacite_value());
+				
+			} else if(o.getCapacite().equalsIgnoreCase("esquive")) {
+				
+				j.capacites.addEsquive(-o.getCapacite_value());
+				
+			} else if(o.getCapacite().equalsIgnoreCase("defense")) {
+				
+				j.capacites.addDefense(-o.getCapacite_value());
+				
+			}  else if(o.getCapacite().equalsIgnoreCase("degat")) {
+				
+				j.capacites.addDegat(-o.getCapacite_value());
+				
+			}
+			
 			return true;
 		} else {
 			return false;
@@ -56,12 +108,15 @@ public class ObjetsEquipe extends ContainerObjets{
 	}
 
 
+	/**
+	 * Afficher les objets équipés
+	 */
 	@Override
 	public void afficher() {
 		int i = 0;
 		System.out.println("Objets équipés (" + used_size + ") : ");
-		for (Objet objet : content) {
-			System.out.println(" - " + objet.getNom());
+		for (Objet objet : content.keySet()) {
+			System.out.println(" - " + objet.getNom() + " ["+ content.get(objet) + "]");
 			i++;
 		}
 		

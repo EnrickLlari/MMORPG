@@ -4,9 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import fr.mugiwara.mmorpg.EntityMisc.Capacites;
+import fr.mugiwara.mmorpg.EntityMisc.Sante;
+import fr.mugiwara.mmorpg.game.Decor;
 import fr.mugiwara.mmorpg.game.Game;
+import fr.mugiwara.mmorpg.game.GameState;
 import fr.mugiwara.mmorpg.misc.Degre;
 import fr.mugiwara.mmorpg.misc.Entite;
+import fr.mugiwara.mmorpg.monster.Monster;
 
 
 /**
@@ -25,7 +30,8 @@ public class Joueur extends Entite{
 	protected Capacites capacites;
 	protected ObjetsEquipe equiped;
 	protected Sac sac;
-	protected EtatJoueur etat;
+	protected Sante sante;
+	protected Experience experience;
 	
 	/*
 	 * Constructeur du joueur
@@ -55,12 +61,14 @@ public class Joueur extends Entite{
 		}
 		
 		capacites = new Capacites();
-		equiped = new ObjetsEquipe();
+		equiped = new ObjetsEquipe(this);
 		sac = new Sac();
 		
-		etat = EtatJoueur.HEALTHY;
+		sante = new Sante(this);
 		
-		 actions = new Actions(this);
+		actions = new Actions(this);
+		
+		experience = new Experience(this);
 		
 	}
 	
@@ -77,12 +85,43 @@ public class Joueur extends Entite{
 	}
 	
 	/**
+	 * Getter Santé
+	 * @return Sante
+	 */
+	public Sante getSante() {
+		return sante;
+	}
+	
+	/**
+	 * Getter Capacités
+	 * @return Capacites
+	 */
+	public Capacites getCapacites() {
+		return capacites;
+	}
+	
+	/**
+	 * Retourne actions
+	 * @return Action
+	 */
+	public Actions getAct() {
+		return actions;
+	}
+	
+	/**
+	 * Getter experience
+	 */
+	public Experience getExperience() {
+		return experience;
+	}
+	
+	/**
 	 * Afficher l'état du joueur
 	 */
 	public void getHealth() {
 		System.out.println(" ");
-		System.out.println("Votre état : " + etat.toString());
-		System.out.println(" ");
+		System.out.println("Votre état : " + sante.getEtat().toString());
+		System.out.println("Niveau du personnage : " + experience.getNiv() + " (" + experience.getExp() + "/" + experience.getNextLevelExp() + ")");
 	}
 	
 	/**
@@ -99,9 +138,9 @@ public class Joueur extends Entite{
 
 		System.out.println("Vos points d'actions : " + actions.getPoints());
 		System.out.println("Actions possibles :");
-		System.out.println("1 - Se déplacer [2PA]   | 3 - Utiliser un objet [?PA]");
-		System.out.println("2 - Attaquer [3PA]      | 4 - Ramasser/Jeter un objet [1PA]");
-		System.out.println("5 - Ne rien faire et terminer votre tour");
+		System.out.println("1 - Se déplacer [2PA]       | 2 - Attaquer [3PA]");
+		System.out.println("3 - Utiliser un objet [?PA] | 4 - Ramasser un objet [1PA]");
+		System.out.println("5 - Jeter un objet [1PA]    | 6 - Terminer le tour");
 		System.out.println(" ");
 		Boolean act = getAction();
 
@@ -113,7 +152,7 @@ public class Joueur extends Entite{
 	 */
 	public boolean getAction() {
 		
-		List<String> resp_pos = Arrays.asList("1", "2", "3", "4", "5");
+		List<String> resp_pos = Arrays.asList("1", "2", "3", "4", "5", "6");
 		
 
 		boolean check = false;
@@ -129,10 +168,18 @@ public class Joueur extends Entite{
 		}
 		
 		// DO ACTION
-		if(resp.equals("5")) {
+		if(resp.equals("6")) {
 			return true;
 		} else if(resp.equals("1")) {
 			actions.move();
+		} else if(resp.equals("2")) {
+			actions.attack();
+		} else if(resp.equals("3")) {
+			actions.objet_use();
+		} else if(resp.equals("4")) {
+			actions.pickup();
+		} else if(resp.equals("5")) {
+			actions.objet_throw();
 		}
 		
 		return false;
@@ -212,5 +259,115 @@ public class Joueur extends Entite{
 		
 	}
 	
+	/**
+	 * Faire ramasser un objet
+	 * @param direction String
+	 * @return Boolean
+	 */
+	public boolean prendre(String direction) {
+		
+		int pos = getPositionNear(this.position, direction);
+		
+		if(Game.map.isObjet(pos)) {
+			Decor dec = (Decor) Game.map.getEntite(pos);
+			sac.addObjet(dec.getObjet());
+			Game.map.removeEntite(pos);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Faire attaquer l'entité
+	 * @param direction String
+	 * @return Boolean
+	 */
+	public boolean attaquer(String direction) {
+		
+		int pos = getPositionNear(this.position, direction);
+		if(Game.map.getEntite(pos) instanceof Monster) {
+			
+			Monster mob = (Monster) Game.map.getEntite(pos);
 
+			int atk_score = capacites.getAttaque().getValue();
+			int esquive_score = mob.getCapacites().getEsquive().getValue();
+			int force_score = force.getValue();
+
+			
+			if(esquive_score >= atk_score + force_score) {
+				System.out.println("Le monstre a esquivé votre attaque !");
+				return true;
+			}
+			
+			int defense_score = mob.getCapacites().getDefense().getValue();
+			
+			if(defense_score >= atk_score + force_score) {
+				System.out.println("Votre attaque ne semble avoir fait aucun dégât.");
+				return true;
+			}
+			
+			int degat = ((atk_score + force_score) - defense_score) + capacites.getDegat().getValue();
+			mob.getSante().getDegat(degat, this);
+			System.out.println("Vous avez attaqué ! ( Dégât infligé : " + degat + ")");
+			
+			return true;
+		}
+		
+		
+		return false;
+	}
+	
+	/**
+	 * Récupére la position en fonction de la direction
+	 * @param dir String
+	 * @return Integer
+	 */
+	public static int getPositionNear(int pos, String dir) {
+		
+		
+		if(dir.equalsIgnoreCase("h")) {
+			
+			pos -= 27; 
+			
+		} else if(dir.equalsIgnoreCase("b")) {
+			
+			pos += 27;
+			
+		} else if(dir.equalsIgnoreCase("g")) {
+			
+			pos -= 1;
+			
+		} else if(dir.equalsIgnoreCase("d")) {
+			
+			pos += 1;
+			
+		}
+		
+		return pos;
+		
+	}
+	
+
+	/**
+	 * Vérifier si c'est un objet
+	 * @param pos Interger
+	 * @return Boolean
+	 */
+	public boolean isObjet(int pos) {
+		
+		
+		return false;
+	}
+	
+	@Override
+	public void mortaction() {
+		Game.setState(GameState.COMPLETED);
+		
+		System.out.println(" ");
+		System.out.println("  >>> Vous êtes mort ! <<<");
+		System.out.println("     Fin de la partie.");
+		System.out.println(" ");
+	}
+	
 }
